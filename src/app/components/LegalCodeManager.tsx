@@ -76,7 +76,7 @@ export function LegalCodeManager({ userTier }: LegalCodeManagerProps) {
         parentId: 'root',
         code: codigo.numero_articulo || '0',
         jurisdiction: codigo.jurisdiccion || 'Federal',
-        uploadDate: codigo.fecha_publicacion || new Date().toISOString().split('T')[0],
+        uploadDate: codigo.fecha_publicada || new Date().toISOString().split('T')[0],
         size: '0 KB',
         category: (codigo.categoria as any) || 'Civil',
         status: (codigo.estado_vigencia as any) || 'Vigente'
