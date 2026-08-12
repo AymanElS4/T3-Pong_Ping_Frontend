@@ -17,6 +17,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from './ui/pagination';
+import { api } from '../services/api';
 
 type UserTier = 'Básico' | 'Profesional' | 'Empresa' | 'Administrador';
 
@@ -78,6 +79,10 @@ export function MembersManager() {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [editingMember, setEditingMember] = useState<Member | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [isApproveOpen, setIsApproveOpen] = useState(false);
+  const [pagoToApprove, setPagoToApprove] = useState<number | null>(null);
+
   const itemsPerPage = 10;
 
   // Form states
@@ -198,6 +203,44 @@ export function MembersManager() {
     }
   };
 
+  const [solicitudes, setSolicitudes] = useState<any[]>([]);
+
+  useEffect(() => {
+    cargarSolicitudes();
+  }, []);
+
+  const cargarSolicitudes = async () => {
+    try {
+      // Pedimos al backend los pagos
+      const data: any = await api.get('/pagos/');
+      const pagosReales = Array.isArray(data.results) ? data.results : (Array.isArray(data) ? data : []);
+      // Filtramos solo los que estén Pendientes
+      setSolicitudes(pagosReales.filter((p: any) => p.estado_pago === 'Pendiente'));
+    } catch (error) {
+      console.error('Error cargando solicitudes:', error);
+    }
+  };
+
+  const openApproveDialog = (pagoId: number) => {
+    setPagoToApprove(pagoId);
+    setIsApproveOpen(true);
+  };
+
+  const confirmApprovePlan = async () => {
+    if (!pagoToApprove) return;
+
+    try {
+      await api.post(`/pagos/${pagoToApprove}/aprobar/`, {});
+      setIsApproveOpen(false);
+      setPagoToApprove(null);
+      cargarSolicitudes();
+    } catch (error) {
+      console.error('Error aprobando plan:', error);
+      alert('Hubo un error al aprobar el plan.');
+    }
+  };
+
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -206,6 +249,8 @@ export function MembersManager() {
           <p className="text-gray-600 mt-1">Administre los usuarios de la plataforma</p>
         </div>
         
+
+
         <Dialog open={isAddOpen} onOpenChange={setIsAddOpen}>
           <DialogTrigger asChild>
             <Button className="gap-2">
@@ -282,6 +327,55 @@ export function MembersManager() {
           </DialogContent>
         </Dialog>
       </div>
+
+      {solicitudes.length > 0 && (
+        <Card className="border-blue-200 shadow-md mb-8">
+          <CardHeader className="bg-blue-50 border-b border-blue-100">
+            <CardTitle className="text-blue-800 flex items-center gap-2">
+              <span className="relative flex h-3 w-3">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
+              </span>
+              Solicitudes de Cambio de Plan Pendientes
+            </CardTitle>
+            <CardDescription>
+              Estos usuarios están esperando que un administrador apruebe su nuevo plan.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="pt-4">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>ID Pago</TableHead>
+                  <TableHead>Monto</TableHead>
+                  <TableHead>Método</TableHead>
+                  <TableHead>Fecha</TableHead>
+                  <TableHead className="text-right">Acción</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {solicitudes.map((solicitud: any) => (
+                  <TableRow key={solicitud.oid_pago}>
+                    <TableCell>#{solicitud.oid_pago}</TableCell>
+                    <TableCell>${solicitud.monto}</TableCell>
+                    <TableCell>{solicitud.metodo_pago}</TableCell>
+                    <TableCell>{new Date(solicitud.fecha_pago).toLocaleDateString()}</TableCell>
+                    <TableCell className="text-right">
+                      <Button 
+                        size="sm" 
+                        className="bg-green-600 hover:bg-green-700 text-white"
+                        onClick={() => openApproveDialog(solicitud.oid_pago)}
+                      >
+                        Aprobar Solicitud
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+        </Card>
+      )}
 
       <Card>
         <CardHeader>
@@ -484,6 +578,29 @@ export function MembersManager() {
               </Button>
               <Button onClick={handleEditMember}>Guardar Cambios</Button>
             </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Modal de Confirmación para Aprobar Plan */}
+      <Dialog open={isApproveOpen} onOpenChange={setIsApproveOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Aprobar Cambio de Plan</DialogTitle>
+            <DialogDescription>
+              ¿Está seguro de que desea aprobar esta solicitud? El usuario recibirá una notificación y obtendrá acceso inmediato a sus nuevos beneficios.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex justify-end gap-2 mt-4">
+            <Button variant="outline" onClick={() => setIsApproveOpen(false)}>
+              Cancelar
+            </Button>
+            <Button 
+              className="bg-green-600 hover:bg-green-700 text-white" 
+              onClick={confirmApprovePlan}
+            >
+              Sí, Aprobar Plan
+            </Button>
           </div>
         </DialogContent>
       </Dialog>
