@@ -635,7 +635,7 @@ export function LegalCodeManager({ userTier }: LegalCodeManagerProps) {
                 <TableHead>Código</TableHead>
                 <TableHead>Jurisdicción</TableHead>
                 <TableHead>Fecha</TableHead>
-                <TableHead>Tamaño</TableHead>
+                {/* <TableHead>Tamaño</TableHead> */}
                 <TableHead>Categoría</TableHead>
                 <TableHead>Estado</TableHead>
                 <TableHead className="text-right">Acciones</TableHead>
@@ -644,7 +644,7 @@ export function LegalCodeManager({ userTier }: LegalCodeManagerProps) {
             <TableBody>
               {paginatedItems.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={8} className="text-center text-gray-500 py-8">
+                  <TableCell colSpan={7} className="text-center text-gray-500 py-8">
                     <BookOpen className="w-12 h-12 mx-auto mb-3 text-gray-400" />
                     <p>Esta carpeta está vacía</p>
                   </TableCell>
@@ -665,7 +665,7 @@ export function LegalCodeManager({ userTier }: LegalCodeManagerProps) {
                         <TableCell className="text-gray-400">—</TableCell>
                         <TableCell className="text-gray-400">—</TableCell>
                         <TableCell className="text-gray-400">—</TableCell>
-                        <TableCell className="text-gray-400">—</TableCell>
+                        {/* <TableCell className="text-gray-400">—</TableCell> */}
                         <TableCell>
                           <Badge variant="outline">Carpeta</Badge>
                         </TableCell>
@@ -696,7 +696,7 @@ export function LegalCodeManager({ userTier }: LegalCodeManagerProps) {
                         <TableCell>{file.code}</TableCell>
                         <TableCell>{file.jurisdiction}</TableCell>
                         <TableCell>{file.uploadDate}</TableCell>
-                        <TableCell>{file.size}</TableCell>
+                        {/* <TableCell>{file.size}</TableCell> */}
                         <TableCell>
                           <Badge className={getCategoryColor(file.category)}>
                             {file.category}

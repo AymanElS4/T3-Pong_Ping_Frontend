@@ -859,7 +859,7 @@ const handleDownload = async (file: FileItem) => {
                 <TableHead>Nombre</TableHead>
                 <TableHead>Número de Caso</TableHead>
                 <TableHead>Fecha de Subida</TableHead>
-                <TableHead>Tamaño</TableHead>
+                {/* <TableHead>Tamaño</TableHead> */}
                 <TableHead>Estado</TableHead>
                 <TableHead className="text-right">Acciones</TableHead>
               </TableRow>
@@ -867,7 +867,7 @@ const handleDownload = async (file: FileItem) => {
             <TableBody>
               {paginatedItems.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center text-gray-500 py-8">
+                  <TableCell colSpan={5} className="text-center text-gray-500 py-8">
                     <FolderOpen className="w-12 h-12 mx-auto mb-3 text-gray-400" />
                     <p>Esta carpeta está vacía</p>
                   </TableCell>
@@ -887,7 +887,7 @@ const handleDownload = async (file: FileItem) => {
                         </TableCell>
                         <TableCell className="text-gray-400">—</TableCell>
                         <TableCell className="text-gray-400">—</TableCell>
-                        <TableCell className="text-gray-400">—</TableCell>
+                        {/* <TableCell className="text-gray-400">—</TableCell> */}
                         <TableCell>
                           <Badge variant="outline">Carpeta</Badge>
                         </TableCell>
@@ -916,7 +916,7 @@ const handleDownload = async (file: FileItem) => {
                         </TableCell>
                         <TableCell>{file.caseNumber}</TableCell>
                         <TableCell>{file.uploadDate}</TableCell>
-                        <TableCell>{file.size}</TableCell>
+                        {/* <TableCell>{file.size}</TableCell> */}
                         <TableCell>
                           <Badge className={getStatusColor(file.status)}>
                             {file.status}

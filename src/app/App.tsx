@@ -9,7 +9,7 @@ import { AccountSection } from './components/AccountSection';
 import { SubscriptionPage } from './components/SubscriptionPage';
 import { PaymentPage } from './components/PaymentPage';
 import { PaymentConfirmation } from './components/PaymentConfirmation';
-import { MembersManager } from './components/MembersManager';
+// import { MembersManager } from './components/MembersManager';
 import { Button } from './components/ui/button';
 import { Home, FileText, Scale, Newspaper, User, LogOut, CreditCard, Users, Bell } from 'lucide-react';
 import { useAuth } from './context/AuthContext';
@@ -134,7 +134,7 @@ export default function App() {
                 <CreditCard className="w-4 h-4" />
                 Planes
               </Button>
-              {userTier === 'Administrador' && (
+              {/* {userTier === 'Administrador' && (
                 <Button
                   variant={activeSection === 'members' ? 'default' : 'ghost'}
                   onClick={() => setActiveSection('members')}
@@ -143,7 +143,7 @@ export default function App() {
                   <Users className="w-4 h-4" />
                   Miembros
                 </Button>
-              )}
+              )} */}
               <Button
                 variant={activeSection === 'account' ? 'default' : 'ghost'}
                 onClick={() => setActiveSection('account')}
@@ -244,7 +244,7 @@ export default function App() {
             onGoHome={handleGoHome}
           />
         )}
-        {activeSection === 'members' && <MembersManager />}
+        {/* {activeSection === 'members' && <MembersManager />} */}
       </main>
     </div>
   );
