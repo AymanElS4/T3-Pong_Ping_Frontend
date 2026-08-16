@@ -78,8 +78,14 @@ export function LoginPage({ onLogin, onShowAdminLogin }: LoginPageProps) {
         await login(email, password);
         onLogin();
       }
-    } catch (err: any) {
-      setError(err.message || 'Error en la operación');
+    } catch (err) {
+      if(err instanceof Error){
+        setError(err.message || 'Error en la operación');
+      }else{ //para evadir el uso de any, si es cualquier otro string
+        //igualmente se da el mensaje de error
+        setError('Error en la operación');
+      }
+      
     } finally {
       setIsSubmitting(false);
     }

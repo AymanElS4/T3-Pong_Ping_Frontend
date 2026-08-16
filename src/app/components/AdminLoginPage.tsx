@@ -36,7 +36,11 @@ export function AdminLoginPage({ onLogin, onBackToUserLogin }: AdminLoginPagePro
       await login(email, password);
       onLogin();
     } catch (err) {
-      setError((err as Error).message|| 'Error de autenticación');
+      if(err instanceof Error){
+        setError(err.message || 'Error de autenticación');
+      }else{
+        setError( 'Error de autenticación');
+      }
     } finally {
       setIsSubmitting(false);
     }

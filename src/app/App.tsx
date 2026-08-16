@@ -10,13 +10,15 @@ import { SubscriptionPage } from './components/SubscriptionPage';
 import { PaymentPage } from './components/PaymentPage';
 import { PaymentConfirmation } from './components/PaymentConfirmation';
 // import { MembersManager } from './components/MembersManager';
-// import {Users} from 'lucide-react';
+//import {Users} from 'lucide-react';
 import { Button } from './components/ui/button';
 import { Home, FileText, Scale, Newspaper, User, LogOut, CreditCard, Bell } from 'lucide-react';
 import { useAuth } from './context/AuthContext';
 import { Badge } from './components/ui/badge';
 
 type Section = 'home' | 'cases' | 'codes' | 'news' | 'account' | 'subscription' | 'payment' | 'confirmation' | 'members';
+
+type UserTier = 'Básico' | 'Profesional' | 'Empresa' | 'Administrador';
 
 interface SelectedPlan {
   name: string;
@@ -33,7 +35,7 @@ export default function App() {
   const [showNotifications, setShowNotifications] = useState(false);
 
   // Derived state from AuthContext
-  const userTier = (user?.rol_nombre as unknown) || 'Básico';
+  const userTier = (user?.rol_nombre || 'Básico') as UserTier;
 
   const handleLogout = () => {
     logout();

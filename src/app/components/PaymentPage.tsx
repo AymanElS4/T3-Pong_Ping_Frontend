@@ -63,19 +63,19 @@ export function PaymentPage({ selectedPlan, onConfirm, onBack }: PaymentPageProp
     }
   };
 
-  const formatCardNumber = (value: string) => {
+  /*const formatCardNumber = (value: string) => {
     const cleaned = value.replace(/\s/g, '');
     const chunks = cleaned.match(/.{1,4}/g);
     return chunks ? chunks.join(' ') : cleaned;
-  };
+  };*/
 
-  const formatExpiryDate = (value: string) => {
+  /*const formatExpiryDate = (value: string) => {
     const cleaned = value.replace(/\D/g, '');
     if (cleaned.length >= 2) {
       return cleaned.slice(0, 2) + '/' + cleaned.slice(2, 4);
     }
     return cleaned;
-  };
+  };*/
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
