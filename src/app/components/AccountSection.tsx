@@ -4,7 +4,8 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Badge } from './ui/badge';
-import { User, Mail, Phone, Building, Shield, Settings, Crown, ArrowRight } from 'lucide-react';
+// import {Building, Phone} from 'lucide-react'
+import { User, Mail, Shield, Settings, Crown, ArrowRight } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { useAuth } from '../context/AuthContext';
 
@@ -22,7 +23,6 @@ export function AccountSection({ onNavigateToSubscription, userTier, onTierChang
   const accountData = {
     name: user?.nombre || '0',
     email: user?.email || '0',
-    phone: user?.telefono_contacto || '0',
     firm: user?.especialidad || user?.matricula_profesional || '0',
     memberSince: user?.fecha_registro ? new Date(user.fecha_registro).toLocaleDateString('es-ES', { month: 'long', year: 'numeric' }) : '0',
     activeCases: 0,
@@ -104,18 +104,6 @@ export function AccountSection({ onNavigateToSubscription, userTier, onTierChang
                   Correo Electrónico
                 </Label>
                 <Input id="email" type="email" defaultValue={accountData.email} />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="phone" className="flex items-center gap-2">
-                  <Phone className="w-4 h-4" />
-                  Teléfono
-                </Label>
-                <Input id="phone" type="tel" defaultValue={accountData.phone} />
-              </div>
-              
-              <div className="space-y-2">
-                {/* Removed "Firma Legal" per request */}
               </div>
             </div>
 

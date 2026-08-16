@@ -10,8 +10,9 @@ import { SubscriptionPage } from './components/SubscriptionPage';
 import { PaymentPage } from './components/PaymentPage';
 import { PaymentConfirmation } from './components/PaymentConfirmation';
 // import { MembersManager } from './components/MembersManager';
+// import {Users} from 'lucide-react';
 import { Button } from './components/ui/button';
-import { Home, FileText, Scale, Newspaper, User, LogOut, CreditCard, Users, Bell } from 'lucide-react';
+import { Home, FileText, Scale, Newspaper, User, LogOut, CreditCard, Bell } from 'lucide-react';
 import { useAuth } from './context/AuthContext';
 import { Badge } from './components/ui/badge';
 
@@ -32,7 +33,7 @@ export default function App() {
   const [showNotifications, setShowNotifications] = useState(false);
 
   // Derived state from AuthContext
-  const userTier = (user?.rol_nombre as any) || 'Básico';
+  const userTier = (user?.rol_nombre as unknown) || 'Básico';
 
   const handleLogout = () => {
     logout();

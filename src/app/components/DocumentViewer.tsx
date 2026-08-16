@@ -123,7 +123,7 @@ export function DocumentViewer({ documentId, documentName, documentCode, documen
             setDocumentData(textData);
           }
         } catch (err) {
-          console.warn("No se pudo cargar la metadata de la DB:", err);
+          console.warn('No se pudo cargar la metadata de la DB:', err);
         }
 
         // 2. Fetch and decode the actual PDF file
@@ -146,7 +146,7 @@ export function DocumentViewer({ documentId, documentName, documentCode, documen
             for (let i = 1; i <= loadedPdf.numPages; i++) {
               pageSections.push({
                 id: `page-${i}`,
-                title: `Página {i}`, // Wait! Wait! In Javascript it should be "Página " + i or template string `Página ${i}`!
+                title: 'Página {i}', // Wait! Wait! In Javascript it should be "Página " + i or template string `Página ${i}`!
                 // Ah, let's fix template literal syntax: `Página ${i}`!
                 level: i === 1 ? 1 : 2,
                 targetId: `page-${i}`
@@ -166,14 +166,14 @@ export function DocumentViewer({ documentId, documentName, documentCode, documen
             setActiveSection('page-1');
           }
         } catch (pdfErr) {
-          console.warn("Fallo al descargar o decodificar el PDF, activando vista de base de datos:", pdfErr);
+          console.warn('Fallo al descargar o decodificar el PDF, activando vista de base de datos:', pdfErr);
           if (isMounted) {
             setActiveSection(documentType === 'code' ? 'norm-title' : 'case-summary');
           }
         }
 
       } catch (err: any) {
-        console.error("Error loading document:", err);
+        console.error('Error loading document:', err);
         if (isMounted) {
           setError(err.message || 'Error al cargar el documento legal.');
         }

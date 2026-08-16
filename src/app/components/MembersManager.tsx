@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -205,11 +205,7 @@ export function MembersManager() {
 
   const [solicitudes, setSolicitudes] = useState<any[]>([]);
 
-  useEffect(() => {
-    cargarSolicitudes();
-  }, []);
-
-  const cargarSolicitudes = async () => {
+  const cargarSolicitudes = useCallback(async () => {
     try {
       // Pedimos al backend los pagos
       const data: any = await api.get('/pagos/');
@@ -219,7 +215,16 @@ export function MembersManager() {
     } catch (error) {
       console.error('Error cargando solicitudes:', error);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    const fetchInicial = async () => {
+      await cargarSolicitudes();
+    };
+    
+    fetchInicial();
+  }, [cargarSolicitudes]); // 3. Pasamos cargarSolicitudes como dependencia
+
 
   const openApproveDialog = (pagoId: number) => {
     setPagoToApprove(pagoId);
