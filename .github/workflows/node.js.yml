@@ -31,5 +31,12 @@ jobs:
       - name: Run lint
         run: npm run lint
 
+      - name: Run lint and output to summary
+        run: |
+          echo "## 🧹 ESLint Summary" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          npm run lint -- --format stylish >> $GITHUB_STEP_SUMMARY || true
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+
       - name: Build app
         run: npm run build --if-present
