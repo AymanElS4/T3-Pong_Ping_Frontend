@@ -139,7 +139,7 @@ export function LegalCaseManager({ userTier }: LegalCaseManagerProps) {
   const [linkError, setLinkError] = useState<string | null>(null);
 
   const { user } = useAuth();
-  const isPremiumUser = userTier === 'Profesional' || userTier === 'Empresa' || userTier === 'Administrador';
+  const isPremiumUser = userTier === 'Profesional' || userTier === 'Empresa' || userTier === 'Administrador' || userTier == 'Básico';
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   // Get current folder path (breadcrumb)
