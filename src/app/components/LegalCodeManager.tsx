@@ -127,7 +127,7 @@ export function LegalCodeManager({ userTier }: LegalCodeManagerProps) {
   const itemsPerPage = 10;
   const [viewingDocument, setViewingDocument] = useState<FileItem | null>(null);
 
-  const isPremiumUser = userTier === 'Profesional' || userTier === 'Empresa' || userTier === 'Administrador';
+  const isPremiumUser = userTier === 'Profesional' || userTier === 'Empresa' || userTier === 'Administrador' || userTier === 'Básico';
 
   // Get current folder path (breadcrumb)
   const getBreadcrumbPath = () => {
