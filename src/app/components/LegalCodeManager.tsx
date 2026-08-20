@@ -129,6 +129,8 @@ export function LegalCodeManager({ userTier }: LegalCodeManagerProps) {
 
   const isPremiumUser = userTier === 'Profesional' || userTier === 'Empresa' || userTier === 'Administrador' || userTier === 'Básico';
 
+  const isAdmin = userTier === 'Administrador';
+
   // Get current folder path (breadcrumb)
   const getBreadcrumbPath = () => {
     const path: FolderItem[] = [];
@@ -267,7 +269,11 @@ export function LegalCodeManager({ userTier }: LegalCodeManagerProps) {
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm('¿Está seguro de que desea eliminar este código legal?')) {
+    if(!isAdmin){
+      console.log("No puedes bro");
+      return;
+    }
+    if (confirm('¿Está seguro de que desea eliminar este código legal?') ) {
       try {
         await api.delete(`/codigos/${id}/`);
         await loadCodigos();
